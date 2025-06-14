@@ -1,0 +1,29 @@
+<script>
+    // Function to display order data from sessionStorage
+    function displayOrderConfirmation() {
+        const orderData = sessionStorage.getItem("orderData");
+
+        if (!orderData) {
+            // If no data found, redirect to home or show fallback
+            document.querySelector(".confirmation-container").innerHTML = `
+                <h2 style="color: red;">⚠ No Order Found</h2>
+                <p>Your order details could not be retrieved. Please try placing your order again.</p>
+                <a href="./index.html" class="back-button">Back to Home</a>
+            `;
+            return;
+        }
+
+        const parsedData = JSON.parse(orderData);
+
+        // Fill in the fields
+        document.getElementById("customerName").textContent = parsedData.name;
+        document.getElementById("shippingAddress").textContent = parsedData.address;
+        document.getElementById("customerEmail").textContent = parsedData.email;
+
+        // Optionally clear the session data after use
+        sessionStorage.removeItem("orderData");
+    }
+
+    // Call when the DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", displayOrderConfirmation);
+</script>
